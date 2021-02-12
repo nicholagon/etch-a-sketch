@@ -14,17 +14,17 @@
                 <div class="controls">
                     <div class="btn-grp">
                         <p><span class="label black-bg">Grid size</span></p>
-                        <button class="grid-size-btn-area">16x16</button>
-                        <button class="grid-size-btn-area">32x32</button>
-                        <button class="grid-size-btn-area">64x64</button>
-                        <button class="grid-size-btn-area">100x100</button>
+                        <button class="grid-size-btn-area" id="btn-16">16x16</button>
+                        <button class="grid-size-btn-area" id="btn-32">32x32</button>
+                        <button class="grid-size-btn-area" id="btn-64">64x64</button>
+                        <button class="grid-size-btn-area" id="btn-100">100x100</button>
                     </div>
                     
                     <div class="btn-grp">
                         <p><span class="label black-bg">Pens</span></p>
-                        <button class="pen-btn-area" id="default-pen">Default</button>
-                        <button class="pen-btn-area" id="rainbow-pen">Rainbow</button>
-                        <button class="pen-btn-area">Erase</button>
+                        <button class="pen-btn-area" id="default-btn">Default</button>
+                        <button class="pen-btn-area" id="rainbow-btn">Random</button>
+                        <button class="pen-btn-area" id="erase-btn">Eraser</button>
                     </div>
                     
                     <div class="btn-grp reset-btn-area">
@@ -44,26 +44,6 @@
             
         </div>
             
-        <script>
-            let dividedLength = 600 / 64;
-            const container = document.querySelector('#container');
-            container.style['grid-template-columns'] = 'repeat(64, ' + dividedLength + 'px)';
-            container.style['grid-template-rows'] = 'repeat(64, ' + dividedLength + 'px)';
-
-            for(let i = 0; i<64*64; i++) {
-                const div = document.createElement('div');
-                div.setAttribute('id', 'cell');
-                div.style['border'] = '0.5px solid #dddddd';
-                container.appendChild(div);
-            }
-            
-            const cells = document.querySelectorAll('#cell');
-            cells.forEach((div) => {
-                div.addEventListener('mouseover', () => {
-                    div.style['background-color'] = '#999999';
-                })
-            })
-
-        </script>
+        <script src="etchasketch.js"></script>
     </body>
 </html>
