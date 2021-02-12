@@ -12,13 +12,17 @@ h1 {
     font-size: 48px;
     text-align: center;
     line-height: 0;
-    padding: 20px 20px;
+}
+
+header {
+    padding-top: 50px;
+    /* border: 1px solid black; */
 }
 
 footer {
     /* font-family: 'Montserrat', serif; */
     font-family: 'Homemade Apple', cursive;
-    font-size: medium;
+    font-size: small;
     text-align: center;
     padding: 20px 20px;
 }
@@ -53,6 +57,7 @@ a:hover {
     text-decoration: underline;
     color: #000000;
     line-height: 0;
+    font-size: medium;
 }
 
 .black-bg {
