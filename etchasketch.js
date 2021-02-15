@@ -1,24 +1,30 @@
+/*
+    Variables and Initializations
+*/
+let cells;
+let eachCell;
+let lastPenUsed;
+
 const container = document.querySelector('#container');
-const btns = document.querySelectorAll('button');
-var divCell;
-var cells;
+const grid_btns = document.querySelectorAll('.grid-size-btn-area');
+const pen_btns = document.querySelectorAll('.pen-btn-area');
+const reset_btn = document.querySelector('#reset-btn');
 
-btns.forEach(btn => btn.addEventListener('click', function(e){
-    if(e.target.className.indexOf("pen-btn") !== -1){
-        selectPen(e.target.id);
-    }
-    else if(e.target.className.indexOf("grid-size-btn") !== -1) {
+/*
+    Button event listeners
+*/
+grid_btns.forEach(btn => btn.addEventListener('click', initGrid));
+pen_btns.forEach(btn => btn.addEventListener('click', initPen));
+reset_btn.addEventListener('click', clearCanvas);
+
+/*
+    Grid functions
+*/
+function initGrid(e) {
+    if(e.target.className.indexOf("grid-size-btn") !== -1) {
         selectGridSize(e.target.id);
+        selectPen(lastPenUsed);
     }
-    else if(e.target.id === 'reset-btn') {
-        clearCanvas();
-    }
-}));
-
-function clearCanvas() {
-    cells.forEach((eachDiv) => {
-        eachDiv.style['background-color'] = '#f0eeee';
-    })
 }
 
 function selectGridSize(btnId) {
@@ -51,12 +57,17 @@ function setGrid(size, cellLength) {
     container.style['grid-template-rows'] = `repeat(${size}, ${cellLength}px)`;
 
     for(let i = 0; i < Math.pow(size, 2); i++) {
-        divCell = document.createElement('div');
-        divCell.setAttribute('id', 'cell');
-        divCell.style['border'] = '0.5px solid #dddddd';
-        container.appendChild(divCell);
+        eachCell = document.createElement('div');
+        eachCell.setAttribute('id', 'cell');
+        eachCell.style['border'] = '0.5px solid #dddddd';
+        container.appendChild(eachCell);
     }
-    
+}
+
+function clearCanvas() {
+    cells.forEach((cell) => {
+        cell.style['background-color'] = '#f0eeee';
+    })
 }
 
 function resetPreviousGridDivs() {
@@ -65,30 +76,43 @@ function resetPreviousGridDivs() {
     }
 }
 
-function selectPen(penId) {
-    let pen = '#999999';
-    if(penId === 'rainbow-btn') {
-        pen = '#' + generateRandomColor();
+/*
+    Pen functions
+*/
+function initPen(e) {
+    if(e.target.className.indexOf("pen-btn") !== -1){
+        lastPenUsed = e.target.id;
+        selectPen(e.target.id);
     }
-    else if(penId === 'erase-btn') {
+}
+
+function selectPen(penId) {
+    if(penId === 'erase-btn') {
         pen = '#f0eeee';
+    }
+    else {
+        pen = '#999999';
     }
 
     cells = document.querySelectorAll('#cell');
-    cells.forEach((divCell) => {
-        divCell.addEventListener('mouseover', () => {
-            divCell.style['background-color'] = pen;
+    cells.forEach((eachCell) => {
+        eachCell.addEventListener('mouseover', () => {
+            if(penId === 'rainbow-btn'){
+                eachCell.style['background-color'] = `#${generateRandomColor()}`;
+            }
+            else {
+                eachCell.style['background-color'] = pen;
+            }
         })
     })
-
 }
 
 function generateRandomColor() {
     return Math.floor(Math.random()*16777215).toString(16);
 }
 
-
-
-// this just sets an initial pen & 16x16 grid to be displayed upon page load
+/*
+    Set the initial pen and 16*16 grid upon page load
+*/
 setGrid(16, 37.5);
 selectPen();
